@@ -43,3 +43,10 @@ clean: stop
 
 .PHONY: restart
 restart: clean start
+
+.PHONY: pytest
+pytest:
+	docker compose run --rm -e APP_ENV=test python poetry run pytest
+
+.PHONY: tests
+tests: pytest
