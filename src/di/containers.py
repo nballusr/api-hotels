@@ -3,9 +3,10 @@ import os
 
 from dependency_injector import containers, providers
 from dependency_injector.containers import Container
-from src.shared.bus.di.containers import BusesContainer
 
 from src.modules.hotel.di.containers import HotelContainer
+from src.shared.bus.di.containers import BusesContainer
+from src.shared.database.di.containers import DatabaseContainer
 
 
 class ApplicationContainer(containers.DeclarativeContainer):
@@ -14,7 +15,6 @@ class ApplicationContainer(containers.DeclarativeContainer):
         "application",
         strict=True,
         yaml_files=[
-          *glob.glob(os.getenv("WORKDIR") + "/config/*.yaml"),
           *glob.glob(os.getenv("WORKDIR") + "/config/*.yml"),
         ],
     )
@@ -25,8 +25,19 @@ class ApplicationContainer(containers.DeclarativeContainer):
         __self__=__self__,
         middlewares=middlewares,
     )
+    database_package: DatabaseContainer | Container = providers.Container(
+        DatabaseContainer,
+        config=app_config.database,
+    )
 
     hotel_package: HotelContainer | Container = providers.Container(
         HotelContainer,
         CommandBus=buses_package.CommandBus,
+        Session=database_package.db_session,
+    )
+
+    middlewares.override(
+        providers.List(
+            database_package.flush_middleware,
+        )
     )

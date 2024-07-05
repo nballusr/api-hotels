@@ -1,12 +1,17 @@
+import os
+
 from fastapi import APIRouter, status
 from fastapi import FastAPI
 
+from src.env import load_by_environment
 from src.modules.hotel.ui.controllers.create_hotel import create_hotel_controller
 from src.modules.hotel.ui.controllers.get_hotel import get_hotel_controller
 from src.modules.hotel.ui.controllers.get_hotels import get_hotels_controller
 from src.modules.hotel.ui.controllers.remove_hotel import remove_hotel_controller
 from src.modules.hotel.ui.controllers.replace_hotel import replace_hotel_controller
 from src.shared.infrastructure.http_middlewares.middlewares import register_middlewares
+
+load_by_environment(os.environ.get("APP_ENV", "dev"))
 
 main_router = APIRouter(prefix="/api")
 

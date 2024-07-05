@@ -13,6 +13,7 @@ router = APIRouter(tags=["hotel"])
 class CreateHotelRequestModel(BaseModel):
     name: str
 
+
 @router.post("/hotels/scrape")
 @inject
 def put_hotel(

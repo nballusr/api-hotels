@@ -16,6 +16,7 @@ start:
 	test -f .env.local || cp .env .env.local
 	docker compose run --rm python poetry install --no-root
 	docker compose up -d --remove-orphans --force-recreate
+	docker compose run --rm python poetry run alembic upgrade head
 
 	@echo "####################################################################"
 	@echo ""

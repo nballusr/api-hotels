@@ -1,3 +1,4 @@
+import os
 from typing import Generator, Any
 
 from dependency_injector import containers, providers, resources
@@ -29,11 +30,9 @@ def get_db_session(session_local: sessionmaker) -> Generator[Session, Any, None]
 class DBResource(resources.Resource):
     def init(self, session_local: sessionmaker) -> Session:
         db = session_local()
-        print("return db:", db.get_transaction())
         return db
 
     def shutdown(self, resource: Session) -> None:
-        print("close db:", resource)
         resource.close()
 
 
@@ -41,11 +40,11 @@ class DatabaseContainer(containers.DeclarativeContainer):
     config = providers.Configuration("database", strict=True)
     connect_args = providers.Callable(
         connection_arguments,
-        url=config.dbal.connections.relational.url,
+        url=config.dal.connections.relational.url,
     )
     engine = providers.Singleton(
         create_engine,
-        config.dbal.connections.relational.url,
+        config.dal.connections.relational.url,
         connect_args=connect_args,
     )
     session_local = providers.Factory(sessionmaker, autocommit=False, autoflush=False, bind=engine)
