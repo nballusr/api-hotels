@@ -11,3 +11,15 @@ class Hotel(ModelBase):
     location = Column(String, nullable=False)
     description = Column(String, nullable=False)
     has_swimming_pool = Column(Boolean(), nullable=False)
+
+    def update(
+        self,
+        name: str,
+        location: str,
+        description: str,
+        has_swimming_pool: bool
+    ) -> None:
+        self.name = name
+        self.location = location
+        self.description = description
+        self.has_swimming_pool = has_swimming_pool

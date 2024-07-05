@@ -1,5 +1,3 @@
-from uuid import UUID
-
 from dependency_injector.wiring import Provide, inject
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel

@@ -1,3 +1,5 @@
+from uuid import UUID
+
 from sqlalchemy.orm import Session
 
 from src.modules.hotel.domain.write.hotel import Hotel
@@ -13,3 +15,6 @@ class ORMHotelRepository(HotelRepository):
 
     def of_name(self, name: str) -> Hotel | None:
         return self.__db.query(Hotel).filter(Hotel.name == name).first()
+
+    def of_uuid(self, uuid: UUID) -> Hotel | None:
+        return self.__db.query(Hotel).filter(Hotel.uuid == uuid).first()
