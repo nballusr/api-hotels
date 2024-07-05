@@ -33,6 +33,7 @@ class ApplicationContainer(containers.DeclarativeContainer):
     hotel_package: HotelContainer | Container = providers.Container(
         HotelContainer,
         CommandBus=buses_package.CommandBus,
+        QueryBus=buses_package.QueryBus,
         Session=database_package.db_session,
     )
 
