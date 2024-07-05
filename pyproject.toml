@@ -1,0 +1,13 @@
+[tool.poetry]
+name = "api-hotels"
+version = "0.0.0"
+description = ""
+authors = ["Nil Ballús <nballusr@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "~3.10"
+fastapi = {version = "^0.111", extras = ["all"]}
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
