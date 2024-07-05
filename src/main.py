@@ -6,6 +6,7 @@ from src.modules.hotel.ui.controllers.get_hotel import get_hotel_controller
 from src.modules.hotel.ui.controllers.get_hotels import get_hotels_controller
 from src.modules.hotel.ui.controllers.remove_hotel import remove_hotel_controller
 from src.modules.hotel.ui.controllers.replace_hotel import replace_hotel_controller
+from src.shared.infrastructure.http_middlewares.middlewares import register_middlewares
 
 main_router = APIRouter(prefix="/api")
 
@@ -23,3 +24,5 @@ main_router.include_router(remove_hotel_controller.router)
 
 app = FastAPI(title="API-Hotels")
 app.include_router(main_router)
+
+register_middlewares(app)
