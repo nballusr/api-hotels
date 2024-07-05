@@ -48,5 +48,9 @@ restart: clean start
 pytest:
 	docker compose run --rm -e APP_ENV=test python poetry run pytest
 
+.PHONY: acceptance
+acceptance:
+	docker compose run --rm -e APP_ENV=test python poetry run behave --tags=-skip tests/acceptance
+
 .PHONY: tests
-tests: pytest
+tests: pytest acceptance
