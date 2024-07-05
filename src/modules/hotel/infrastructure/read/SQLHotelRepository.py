@@ -1,4 +1,4 @@
-from uuid import UUID, uuid4
+from uuid import UUID
 
 from sqlalchemy import text
 from sqlalchemy.orm import Session
@@ -34,3 +34,26 @@ class SQLHotelRepository(HotelRepository):
             description=row.description,
             has_swimming_pool=row.has_swimming_pool,
         )
+
+    def all(self) -> list[Hotel]:
+        result = self.__db.execute(
+            text(
+                """
+                SELECT h.uuid, h.name, h.location, h.description, h.has_swimming_pool
+                FROM hotel h
+                """
+            )
+        )
+
+        rows = result.fetchall()
+
+        return [
+            Hotel(
+                uuid=row.uuid,
+                name=row.name,
+                location=row.location,
+                description=row.description,
+                has_swimming_pool=row.has_swimming_pool,
+            )
+            for row in rows
+        ]

@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 
 from src.modules.hotel.application.create_hotel.create_hotel_command_handler import CreateHotelCommandHandler
 from src.modules.hotel.application.get_hotel.get_hotel_query_handler import GetHotelQueryHandler
+from src.modules.hotel.application.get_hotels.get_hotels_query_handler import GetHotelsQueryHandler
 from src.modules.hotel.application.update_hotel.update_hotel_command_handler import UpdateHotelCommandHandler
 from src.modules.hotel.domain.read.hotel_repository import HotelRepository as ReadHotelRepository
 from src.modules.hotel.domain.write.hotel_repository import HotelRepository
@@ -10,6 +11,7 @@ from src.modules.hotel.infrastructure.read.SQLHotelRepository import SQLHotelRep
 from src.modules.hotel.infrastructure.write.orm_hotel_repository import ORMHotelRepository
 from src.modules.hotel.ui.controllers.create_hotel import create_hotel_controller
 from src.modules.hotel.ui.controllers.get_hotel import get_hotel_controller
+from src.modules.hotel.ui.controllers.get_hotels import get_hotels_controller
 from src.modules.hotel.ui.controllers.update_hotel import update_hotel_controller
 from src.shared.bus.infrastructure.command_bus import CommandBus
 from src.shared.bus.infrastructure.query_bus import QueryBus
@@ -17,7 +19,7 @@ from src.shared.bus.infrastructure.query_bus import QueryBus
 
 class HotelContainer(containers.DeclarativeContainer):
     wiring_config = containers.WiringConfiguration(
-        modules=[create_hotel_controller, update_hotel_controller, get_hotel_controller],
+        modules=[create_hotel_controller, update_hotel_controller, get_hotel_controller, get_hotels_controller],
         auto_wire=False,
     )
     CommandBus = providers.Dependency(instance_of=CommandBus)
@@ -52,5 +54,10 @@ class HotelContainer(containers.DeclarativeContainer):
 
     get_hotel_query_handler = providers.Singleton(
         GetHotelQueryHandler,
+        hotel_repository=read_hotel_repository,
+    )
+
+    get_hotels_query_handler = providers.Singleton(
+        GetHotelsQueryHandler,
         hotel_repository=read_hotel_repository,
     )

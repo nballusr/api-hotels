@@ -1,28 +1,28 @@
-from uuid import uuid4
+from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends
 
-from fastapi import APIRouter
-
+from src.modules.hotel.application.get_hotels.get_hotels_query import GetHotelsQuery
 from src.modules.hotel.ui.controllers.get_hotel.get_hotel_response_model import GetHotelResponseModel
+from src.shared.bus.infrastructure.query_bus import QueryBus
 
 router = APIRouter(tags=["hotel"])
 
 
 @router.get("/hotels", response_model=list[GetHotelResponseModel])
+@inject
 def get_hotels(
+    query_bus: QueryBus = Depends(Provide["QueryBus"]),
 ) -> list[GetHotelResponseModel]:
+    query = GetHotelsQuery()
+    hotels = query_bus.handle(query)
+
     return [
         GetHotelResponseModel(
-            uuid=uuid4(),
-            name="Test name",
-            location="C/ Test",
-            description="Test description",
-            has_swimming_pool=False,
-        ),
-        GetHotelResponseModel(
-            uuid=uuid4(),
-            name="Test name 2",
-            location="C/ Test 2",
-            description="Test description 2",
-            has_swimming_pool=False,
-        ),
+            uuid=hotel.uuid,
+            name=hotel.name,
+            location=hotel.location,
+            description=hotel.description,
+            has_swimming_pool=hotel.has_swimming_pool,
+        )
+        for hotel in hotels
     ]

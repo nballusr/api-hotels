@@ -8,4 +8,8 @@ class HotelRepository(ABC):
     @abstractmethod
     def of_uuid(self, uuid: UUID) -> Hotel | None:
         pass
+
+    @abstractmethod
+    def all(self) -> list[Hotel]:
+        pass
     
