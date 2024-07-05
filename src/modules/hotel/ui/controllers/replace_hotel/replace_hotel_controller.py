@@ -13,9 +13,10 @@ class ReplaceHotelRequestModel(BaseModel):
     description: str
     has_swimming_pool: bool
 
+
 @router.put("/hotels/{hotel_uuid}")
 def put_hotel(
-    hotel_uuid: UUID,
-    request: ReplaceHotelRequestModel,
+        hotel_uuid: UUID,
+        request: ReplaceHotelRequestModel,
 ) -> None:
     pass

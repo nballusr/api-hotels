@@ -1,6 +1,7 @@
 from fastapi import APIRouter, status
 from fastapi import FastAPI
 
+from src.modules.hotel.ui.controllers.create_hotel import create_hotel_controller
 from src.modules.hotel.ui.controllers.get_hotel import get_hotel_controller
 from src.modules.hotel.ui.controllers.get_hotels import get_hotels_controller
 from src.modules.hotel.ui.controllers.remove_hotel import remove_hotel_controller
@@ -14,6 +15,7 @@ def health_check():
     return status.HTTP_200_OK
 
 
+main_router.include_router(create_hotel_controller.router)
 main_router.include_router(get_hotel_controller.router)
 main_router.include_router(get_hotels_controller.router)
 main_router.include_router(replace_hotel_controller.router)
