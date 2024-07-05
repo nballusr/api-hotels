@@ -3,6 +3,7 @@ from fastapi import FastAPI
 
 from src.modules.hotel.ui.controllers.get_hotel import get_hotel_controller
 from src.modules.hotel.ui.controllers.get_hotels import get_hotels_controller
+from src.modules.hotel.ui.controllers.replace_hotel import replace_hotel_controller
 
 main_router = APIRouter(prefix="/api")
 
@@ -14,6 +15,7 @@ def health_check():
 
 main_router.include_router(get_hotel_controller.router)
 main_router.include_router(get_hotels_controller.router)
+main_router.include_router(replace_hotel_controller.router)
 
 app = FastAPI(title="API-Hotels")
 app.include_router(main_router)
