@@ -7,11 +7,17 @@ authors = ["Nil Ballús <nballusr@gmail.com>"]
 [tool.poetry.dependencies]
 python = "~3.10"
 fastapi = {version = "^0.111", extras = ["all"]}
+sqlalchemy = "^2.0.31"
+alembic = "^1.13.2"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.2.2"
 behave = "^1.2.6"
+psycopg2 = "^2.9.9"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+pythonpath = "."
