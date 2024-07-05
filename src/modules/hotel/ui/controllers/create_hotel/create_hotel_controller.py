@@ -17,12 +17,10 @@ class CreateHotelRequestModel(BaseModel):
 @router.post("/hotels/scrape")
 @inject
 def put_hotel(
-    hotel_uuid: UUID,
     request: CreateHotelRequestModel,
     command_bus: CommandBus = Depends(Provide["CommandBus"]),
 ) -> None:
     command = CreateHotelCommand(
-        uuid=hotel_uuid,
         name=request.name,
     )
     command_bus.handle(command)
