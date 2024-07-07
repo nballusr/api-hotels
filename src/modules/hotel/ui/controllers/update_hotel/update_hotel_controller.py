@@ -10,7 +10,7 @@ from src.shared.bus.infrastructure.command_bus import CommandBus
 router = APIRouter(tags=["hotel"])
 
 
-class ReplaceHotelRequestModel(BaseModel):
+class UpdateHotelRequestModel(BaseModel):
     name: str
     name: str
     location: str
@@ -22,7 +22,7 @@ class ReplaceHotelRequestModel(BaseModel):
 @inject
 def put_hotel(
     hotel_uuid: UUID,
-    request: ReplaceHotelRequestModel,
+    request: UpdateHotelRequestModel,
     command_bus: CommandBus = Depends(Provide["CommandBus"]),
 ) -> None:
     command = UpdateHotelCommand(

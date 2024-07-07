@@ -32,3 +32,23 @@ def exists_a_hotel_with_name(context: Context, name: str):
     hotel = db.query(Hotel).filter(Hotel.name == name).first()
 
     assert hotel is not None
+
+
+@then("exists a hotel with uuid {uuid} and values")
+def exists_a_hotel_with_name(context: Context, uuid: str):
+    values: dict = json.loads(context.text)
+
+    container: ApplicationContainer = context.container
+    db: Session = container.database_package.db_session()
+    hotel = db.query(Hotel).filter(Hotel.uuid == uuid).first()
+
+    assert hotel is not None
+    if "name" in values.keys():
+        assert hotel.name == values["name"]
+    if "location" in values.keys():
+        assert hotel.location == values["location"]
+    if "description" in values.keys():
+        assert hotel.description == values["description"]
+    if "has_swimming_pool" in values.keys():
+        assert hotel.has_swimming_pool == values["has_swimming_pool"]
+
