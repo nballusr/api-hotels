@@ -29,3 +29,15 @@ class StubHotelBuilder:
     def with_name(self, name: str) -> "StubHotelBuilder":
         self.__name = name
         return self
+
+    def with_location(self, location: str) -> "StubHotelBuilder":
+        self.__location = location
+        return self
+
+    def with_description(self, description: str) -> "StubHotelBuilder":
+        self.__description = description
+        return self
+
+    def with_has_swimming_pool(self, has_swimming_pool: bool) -> "StubHotelBuilder":
+        self.__has_swimming_pool = has_swimming_pool
+        return self
