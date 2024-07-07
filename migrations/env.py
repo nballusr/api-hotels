@@ -1,3 +1,4 @@
+import os
 from logging.config import fileConfig
 
 from alembic import context
@@ -5,6 +6,8 @@ from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from migrations.models import models
+from src.di.containers import ApplicationContainer
+from src.env import load_by_environment
 from src.shared.database.infrastructure.model_base import ModelBase
 
 print(f"{len(models)} models declared")
@@ -12,6 +15,12 @@ print(f"{len(models)} models declared")
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
+
+# Load the environment variables and set the database URL
+load_by_environment(os.environ.get("APP_ENV", "dev"))
+container = ApplicationContainer()
+url = container.database_package.config.dal.connections.relational.url()
+config.set_section_option(config.config_ini_section, "sqlalchemy.url", url)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
