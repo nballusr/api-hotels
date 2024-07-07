@@ -17,6 +17,12 @@ def hotel_with_values_exists(context: Context, uuid: str):
     builder = StubHotelBuilder().with_uuid(uuid=UUID(uuid))
     if "name" in values.keys():
         builder.with_name(values["name"])
+    if "location" in values.keys():
+        builder.with_location(values["location"])
+    if "description" in values.keys():
+        builder.with_description(values["description"])
+    if "has_swimming_pool" in values.keys():
+        builder.with_has_swimming_pool(values["has_swimming_pool"])
 
     hotel = builder.build()
     container: ApplicationContainer = context.container

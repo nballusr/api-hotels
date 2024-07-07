@@ -55,4 +55,27 @@ def response_message_is(context, message: str):
     assert response.json() == {"message": message}
 
 
+@then('the JSON node (?P<quoted>"?)(?P<node>.*)\\1 should be (?P<content>.*)')
+def json_should_be_equal_to(context, node: str, content: str, quoted: str):
+    response = context.fastapi.response
+    assert response is not None
+    result = response.json()
+    for nest in node.split("."):
+        result = result[parse_json_key(nest)]
+    match content:
+        case "null":
+            content = "None"
+        case "false":
+            content = "False"
+        case "true":
+            content = "True"
+    assert str(result) == content, "Expected " + content + " and given " + str(result)
+
+
+def parse_json_key(key):
+    if key.isnumeric():
+        return int(key)
+    return key
+
+
 use_step_matcher("parse")
