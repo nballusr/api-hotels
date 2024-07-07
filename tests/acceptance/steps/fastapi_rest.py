@@ -48,4 +48,11 @@ def response_status_is(context, status: str):
     assert response.status_code == int(status), "Expected " + str(status) + " and given " + str(response.status_code)
 
 
+@then("the response message is (?P<message>.*)")
+def response_message_is(context, message: str):
+    response = context.fastapi.response
+    assert response is not None
+    assert response.json() == {"message": message}
+
+
 use_step_matcher("parse")
