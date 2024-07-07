@@ -7,6 +7,7 @@ from src.shared.application.command_handler import CommandHandler
 class UpdateHotelCommandHandler(CommandHandler):
     def __init__(self, hotel_repository: HotelRepository):
         self.__hotel_repository = hotel_repository
+
     def __call__(self, command: UpdateHotelCommand) -> None:
         existing_hotel = self.__hotel_repository.of_uuid(command.uuid)
         if existing_hotel is None:
@@ -16,6 +17,6 @@ class UpdateHotelCommandHandler(CommandHandler):
             name=command.name,
             location=command.location,
             description=command.description,
-            has_swimming_pool=False
+            has_swimming_pool=command.has_swimming_pool,
         )
         self.__hotel_repository.save(existing_hotel)

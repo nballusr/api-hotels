@@ -12,7 +12,7 @@ class CreateHotelCommandHandlerTest(TestCase):
         self.__in_memory_hotel_repository = InMemoryHotelRepository()
         self.__handler = CreateHotelCommandHandler(self.__in_memory_hotel_repository)
 
-    def test_hotel_with_same_name_already_exists_throws_exception(self) -> None:
+    def test_hotel_with_same_name_already_exists_raises_exception(self) -> None:
         self.__in_memory_hotel_repository.save(
             StubHotelBuilder().with_name(hotel_name := "Existing name").build()
         )
