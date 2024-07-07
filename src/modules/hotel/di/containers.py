@@ -8,7 +8,7 @@ from src.modules.hotel.application.remove_hotel.remove_hotel_command_handler imp
 from src.modules.hotel.application.update_hotel.update_hotel_command_handler import UpdateHotelCommandHandler
 from src.modules.hotel.domain.read.hotel_repository import HotelRepository as ReadHotelRepository
 from src.modules.hotel.domain.write.hotel_repository import HotelRepository
-from src.modules.hotel.infrastructure.read.SQLHotelRepository import SQLHotelRepository
+from src.modules.hotel.infrastructure.read.sql_hotel_repository import SQLHotelRepository
 from src.modules.hotel.infrastructure.write.orm_hotel_repository import ORMHotelRepository
 from src.modules.hotel.ui.controllers.create_hotel import create_hotel_controller
 from src.modules.hotel.ui.controllers.get_hotel import get_hotel_controller
