@@ -1,11 +1,8 @@
 from unittest import TestCase
 from uuid import uuid4
 
-from src.modules.hotel.application.get_hotel.get_hotel_query import GetHotelQuery
-from src.modules.hotel.application.get_hotel.get_hotel_query_handler import GetHotelQueryHandler
 from src.modules.hotel.application.get_hotels.get_hotels_query import GetHotelsQuery
 from src.modules.hotel.application.get_hotels.get_hotels_query_handler import GetHotelsQueryHandler
-from src.modules.hotel.domain.exception.hotel_not_found_exception import HotelNotFoundException
 from tests.infrastructure.modules.hotel.domain.read.in_memory_hotel_repository import InMemoryHotelRepository
 from tests.infrastructure.modules.hotel.domain.read.stub_hotel_builder import StubHotelBuilder
 

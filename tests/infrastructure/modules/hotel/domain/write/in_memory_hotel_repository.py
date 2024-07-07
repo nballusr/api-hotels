@@ -20,3 +20,6 @@ class InMemoryHotelRepository(HotelRepository):
 
     def of_uuid(self, uuid: UUID) -> Hotel | None:
         return self.__memory.get(uuid, None)
+
+    def remove(self, hotel: Hotel) -> None:
+        del self.__memory[hotel.uuid]

@@ -18,3 +18,6 @@ class ORMHotelRepository(HotelRepository):
 
     def of_uuid(self, uuid: UUID) -> Hotel | None:
         return self.__db.query(Hotel).filter(Hotel.uuid == uuid).first()
+
+    def remove(self, hotel: Hotel) -> None:
+        self.__db.delete(hotel)
