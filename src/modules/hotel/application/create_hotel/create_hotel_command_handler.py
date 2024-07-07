@@ -10,6 +10,7 @@ from src.shared.application.command_handler import CommandHandler
 class CreateHotelCommandHandler(CommandHandler):
     def __init__(self, hotel_repository: HotelRepository):
         self.__hotel_repository = hotel_repository
+
     def __call__(self, command: CreateHotelCommand) -> None:
         existing_hotel = self.__hotel_repository.of_name(command.name)
         if existing_hotel is not None:

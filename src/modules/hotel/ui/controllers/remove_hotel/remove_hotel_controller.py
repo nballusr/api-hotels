@@ -6,5 +6,5 @@ router = APIRouter(tags=["hotel"])
 
 
 @router.delete("/hotels/{hotel_uuid}")
-def put_hotel(hotel_uuid: UUID) -> None:
+def remove_hotel(hotel_uuid: UUID) -> None:
     pass
