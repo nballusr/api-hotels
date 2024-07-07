@@ -72,6 +72,17 @@ def json_should_be_equal_to(context, node: str, content: str, quoted: str):
     assert str(result) == content, "Expected " + content + " and given " + str(result)
 
 
+@then("the JSON node (?P<node>.*) should have (?P<number>.*) elements")
+def json_should_be_equal_to(context, node: str, number: str):
+    response = context.fastapi.response
+    assert response is not None
+    result = response.json()
+    for nest in node.split("."):
+        result = result[parse_json_key(nest)]
+
+    assert len(result) == int(number), "Expected " + str(number) + " and given " + str(len(result))
+
+
 def parse_json_key(key):
     if key.isnumeric():
         return int(key)
