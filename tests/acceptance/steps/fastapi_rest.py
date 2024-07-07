@@ -23,7 +23,7 @@ def assert_fastapi_context_initialized(context):
 
 def call_api(fastapi_context: FastApiContext, method: str, url: str, body: str | None = None):
     method_call = getattr(fastapi_context.client, method.lower())
-    if method.lower() == "get":
+    if method.lower() in ("get", "delete"):
         fastapi_context.response = method_call(url=url)
     else:
         fastapi_context.response = method_call(url=url, data=body)
