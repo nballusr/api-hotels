@@ -9,6 +9,8 @@ python = "~3.10"
 fastapi = {version = "^0.111", extras = ["all"]}
 sqlalchemy = "^2.0.31"
 alembic = "^1.13.2"
+dependency-injector = "^4.41.0"
+pybuses = "^1.1.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.2.2"
