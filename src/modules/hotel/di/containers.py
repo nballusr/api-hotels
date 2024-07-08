@@ -62,6 +62,7 @@ class HotelContainer(containers.DeclarativeContainer):
 
     create_hotel_command_handler = providers.Singleton(
         CreateHotelCommandHandler,
+        get_hotel_information_service=get_hotel_information_service,
         hotel_repository=hotel_repository,
     )
 

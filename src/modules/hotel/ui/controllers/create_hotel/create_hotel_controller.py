@@ -14,7 +14,7 @@ class CreateHotelRequestModel(BaseModel):
 
 @router.post("/hotels/scrape")
 @inject
-def put_hotel(
+def post_hotel(
     request: CreateHotelRequestModel,
     command_bus: CommandBus = Depends(Provide["CommandBus"]),
 ) -> None:
