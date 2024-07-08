@@ -7,8 +7,11 @@ from src.modules.hotel.application.get_hotels.get_hotels_query_handler import Ge
 from src.modules.hotel.application.remove_hotel.remove_hotel_command_handler import RemoveHotelCommandHandler
 from src.modules.hotel.application.update_hotel.update_hotel_command_handler import UpdateHotelCommandHandler
 from src.modules.hotel.domain.read.hotel_repository import HotelRepository as ReadHotelRepository
+from src.modules.hotel.domain.service.get_hotel_information_service import GetHotelInformationService
 from src.modules.hotel.domain.write.hotel_repository import HotelRepository
 from src.modules.hotel.infrastructure.read.sql_hotel_repository import SQLHotelRepository
+from src.modules.hotel.infrastructure.service.http_booking_get_hotel_information_service import \
+    HttpBookingGetHotelInformationService
 from src.modules.hotel.infrastructure.write.orm_hotel_repository import ORMHotelRepository
 from src.modules.hotel.ui.controllers.create_hotel import create_hotel_controller
 from src.modules.hotel.ui.controllers.get_hotel import get_hotel_controller
@@ -47,6 +50,13 @@ class HotelContainer(containers.DeclarativeContainer):
         providers.Singleton(
             SQLHotelRepository,
             db=Session,
+        )
+    )
+
+    get_hotel_information_service = providers.AbstractSingleton(GetHotelInformationService)
+    get_hotel_information_service.override(
+        providers.Singleton(
+            HttpBookingGetHotelInformationService,
         )
     )
 
