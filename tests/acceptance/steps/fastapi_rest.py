@@ -55,8 +55,17 @@ def response_message_is(context, message: str):
     assert response.json() == {"message": message}
 
 
-@then('the JSON node (?P<quoted>"?)(?P<node>.*)\\1 should be (?P<content>.*)')
-def json_should_be_equal_to(context, node: str, content: str, quoted: str):
+@then("the JSON node (?P<node>.*) should exist")
+def json_should_exist(context, node: str):
+    response = context.fastapi.response
+    assert response is not None
+    result = response.json()
+    for nest in node.split("."):
+        result = result[parse_json_key(nest)]
+
+
+@then("the JSON node (?P<node>.*) should be (?P<content>.*)")
+def json_should_be_equal_to(context, node: str, content: str):
     response = context.fastapi.response
     assert response is not None
     result = response.json()
