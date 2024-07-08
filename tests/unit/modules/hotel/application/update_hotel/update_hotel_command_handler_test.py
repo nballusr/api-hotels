@@ -3,6 +3,7 @@ from uuid import uuid4
 
 from src.modules.hotel.application.update_hotel.update_hotel_command import UpdateHotelCommand
 from src.modules.hotel.application.update_hotel.update_hotel_command_handler import UpdateHotelCommandHandler
+from src.modules.hotel.domain.exception.hotel_already_exists_exception import HotelAlreadyExistsException
 from src.modules.hotel.domain.exception.hotel_not_found_exception import HotelNotFoundException
 from tests.infrastructure.modules.hotel.domain.write.in_memory_hotel_repository import InMemoryHotelRepository
 from tests.infrastructure.modules.hotel.domain.write.stub_hotel_builder import StubHotelBuilder
@@ -26,6 +27,28 @@ class UpdateHotelCommandHandlerTest(TestCase):
             self.__handler(command)
 
         self.assertEqual(f"Hotel with uuid {uuid} not found", e.exception.message)
+
+
+    def test_another_hotel_with_same_name_raises_exception(self) -> None:
+        self.__in_memory_hotel_repository.save(
+            StubHotelBuilder().with_uuid(hotel_uuid := uuid4()).build()
+        )
+        self.__in_memory_hotel_repository.save(
+            StubHotelBuilder().with_name(hotel_new_name := "New name").build()
+        )
+
+        command = UpdateHotelCommand(
+            uuid=hotel_uuid,
+            name="New name",
+            location="New location",
+            description="New description",
+            has_swimming_pool=True,
+        )
+
+        with self.assertRaises(HotelAlreadyExistsException) as e:
+            self.__handler(command)
+
+        self.assertEqual(f"Hotel with name {hotel_new_name} already exists", e.exception.message)
 
     def test_hotel_is_updated(self) -> None:
         self.__in_memory_hotel_repository.save(

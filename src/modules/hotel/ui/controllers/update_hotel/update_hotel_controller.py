@@ -4,8 +4,11 @@ from dependency_injector.wiring import Provide, inject
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 
+from src.modules.hotel.application.get_hotel.get_hotel_query import GetHotelQuery
 from src.modules.hotel.application.update_hotel.update_hotel_command import UpdateHotelCommand
+from src.modules.hotel.ui.controllers.response_models.hotel_response_model import HotelResponseModel
 from src.shared.bus.infrastructure.command_bus import CommandBus
+from src.shared.bus.infrastructure.query_bus import QueryBus
 
 router = APIRouter(tags=["hotel"])
 
@@ -18,13 +21,14 @@ class UpdateHotelRequestModel(BaseModel):
     has_swimming_pool: bool
 
 
-@router.put("/hotels/{hotel_uuid}")
+@router.put("/hotels/{hotel_uuid}", response_model=HotelResponseModel)
 @inject
 def put_hotel(
     hotel_uuid: UUID,
     request: UpdateHotelRequestModel,
     command_bus: CommandBus = Depends(Provide["CommandBus"]),
-) -> None:
+    query_bus: QueryBus = Depends(Provide["QueryBus"]),
+) -> HotelResponseModel:
     command = UpdateHotelCommand(
         uuid=hotel_uuid,
         name=request.name,
@@ -33,3 +37,14 @@ def put_hotel(
         has_swimming_pool=request.has_swimming_pool,
     )
     command_bus.handle(command)
+
+    query = GetHotelQuery(uuid=hotel_uuid)
+    hotel = query_bus.handle(query)
+
+    return HotelResponseModel(
+        uuid=hotel.uuid,
+        name=hotel.name,
+        location=hotel.location,
+        description=hotel.description,
+        has_swimming_pool=hotel.has_swimming_pool,
+    )
