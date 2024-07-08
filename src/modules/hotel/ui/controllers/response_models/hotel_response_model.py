@@ -2,7 +2,7 @@ from uuid import UUID
 
 from pydantic import BaseModel
 
-class GetHotelResponseModel(BaseModel):
+class HotelResponseModel(BaseModel):
     uuid: UUID
     name: str
     location: str

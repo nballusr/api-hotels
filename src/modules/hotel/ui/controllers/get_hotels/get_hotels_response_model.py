@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
-from src.modules.hotel.ui.controllers.get_hotel.get_hotel_response_model import GetHotelResponseModel
+from src.modules.hotel.ui.controllers.response_models.hotel_response_model import HotelResponseModel
 
 
 class GetHotelsResponseModel(BaseModel):
-    hotels: list[GetHotelResponseModel]
+    hotels: list[HotelResponseModel]

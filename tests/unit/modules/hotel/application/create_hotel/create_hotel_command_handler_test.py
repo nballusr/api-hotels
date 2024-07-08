@@ -1,5 +1,6 @@
 from unittest import TestCase
 from unittest.mock import MagicMock
+from uuid import uuid4
 
 from src.modules.hotel.application.create_hotel.create_hotel_command import CreateHotelCommand
 from src.modules.hotel.application.create_hotel.create_hotel_command_handler import CreateHotelCommandHandler
@@ -19,10 +20,22 @@ class CreateHotelCommandHandlerTest(TestCase):
             self.__in_memory_hotel_repository,
         )
 
+    def test_hotel_with_same_uuid_already_exists_raises_exception(self) -> None:
+        self.__in_memory_hotel_repository.save(
+            StubHotelBuilder().with_uuid(hotel_uuid := uuid4()).build()
+        )
+
+        command = CreateHotelCommand(uuid=hotel_uuid, name="name")
+
+        with self.assertRaises(HotelAlreadyExistsException) as e:
+            self.__handler(command)
+
+        self.assertEqual(f"Hotel with uuid {hotel_uuid} already exists", e.exception.message)
+
     def test_hotel_not_found_in_booking_raises_exception(self) -> None:
         self.__mock_service.from_name.return_value = None
 
-        command = CreateHotelCommand(name=(hotel_name := "Not found name"))
+        command = CreateHotelCommand(uuid=uuid4(), name=(hotel_name := "Not found name"))
 
         with self.assertRaises(HotelNotFoundInBookingException) as e:
             self.__handler(command)
@@ -41,7 +54,7 @@ class CreateHotelCommandHandlerTest(TestCase):
             StubHotelBuilder().with_name(hotel_name := "Existing name").build()
         )
 
-        command = CreateHotelCommand(name="existing name")
+        command = CreateHotelCommand(uuid=uuid4(), name="existing name")
 
         with self.assertRaises(HotelAlreadyExistsException) as e:
             self.__handler(command)
@@ -55,13 +68,14 @@ class CreateHotelCommandHandlerTest(TestCase):
             description="Hotel Description",
             has_swimming_pool=True,
         )
-        command = CreateHotelCommand(name=(name := "New name"))
+        command = CreateHotelCommand(uuid=(uuid := uuid4()), name=(name := "New name"))
 
         self.__handler(command)
 
         retrieved_hotel = self.__in_memory_hotel_repository.of_name(name)
 
         self.assertIsNotNone(retrieved_hotel)
+        self.assertEqual(uuid, retrieved_hotel.uuid)
         self.assertEqual("New name", retrieved_hotel.name)
         self.assertEqual("Hotel Location", retrieved_hotel.location)
         self.assertEqual("Hotel Description", retrieved_hotel.description)
