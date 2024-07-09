@@ -2,6 +2,7 @@ from uuid import UUID
 
 from pydantic import BaseModel
 
+
 class Hotel(BaseModel):
     uuid: UUID
     name: str

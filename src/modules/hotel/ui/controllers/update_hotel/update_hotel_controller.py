@@ -37,10 +37,10 @@ class UpdateHotelRequestModel(BaseModel):
 )
 @inject
 def put_hotel(
-    hotel_uuid: UUID,
-    request: UpdateHotelRequestModel,
-    command_bus: CommandBus = Depends(Provide["CommandBus"]),
-    query_bus: QueryBus = Depends(Provide["QueryBus"]),
+        hotel_uuid: UUID,
+        request: UpdateHotelRequestModel,
+        command_bus: CommandBus = Depends(Provide["CommandBus"]),
+        query_bus: QueryBus = Depends(Provide["QueryBus"]),
 ) -> HotelResponseModel:
     command = UpdateHotelCommand(
         uuid=hotel_uuid,

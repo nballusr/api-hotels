@@ -25,8 +25,8 @@ router = APIRouter(tags=["hotel"])
 )
 @inject
 def get_hotel(
-    hotel_uuid: UUID,
-    query_bus: QueryBus = Depends(Provide["QueryBus"]),
+        hotel_uuid: UUID,
+        query_bus: QueryBus = Depends(Provide["QueryBus"]),
 ) -> HotelResponseModel:
     query = GetHotelQuery(uuid=hotel_uuid)
     hotel = query_bus.handle(query)

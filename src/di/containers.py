@@ -15,7 +15,7 @@ class ApplicationContainer(containers.DeclarativeContainer):
         "application",
         strict=True,
         yaml_files=[
-          *glob.glob(os.getenv("WORKDIR") + "/config/*.yml"),
+            *glob.glob(os.getenv("WORKDIR") + "/config/*.yml"),
         ],
     )
 

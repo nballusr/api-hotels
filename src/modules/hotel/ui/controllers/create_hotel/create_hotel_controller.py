@@ -34,9 +34,9 @@ class CreateHotelRequestModel(BaseModel):
 )
 @inject
 def post_hotel(
-    request: CreateHotelRequestModel,
-    command_bus: CommandBus = Depends(Provide["CommandBus"]),
-    query_bus: QueryBus = Depends(Provide["QueryBus"]),
+        request: CreateHotelRequestModel,
+        command_bus: CommandBus = Depends(Provide["CommandBus"]),
+        query_bus: QueryBus = Depends(Provide["QueryBus"]),
 ) -> HotelResponseModel:
     uuid = uuid4()
     command = CreateHotelCommand(

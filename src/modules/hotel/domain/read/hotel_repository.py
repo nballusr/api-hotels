@@ -12,4 +12,3 @@ class HotelRepository(ABC):
     @abstractmethod
     def all(self) -> list[Hotel]:
         pass
-    

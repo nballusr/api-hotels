@@ -1,4 +1,3 @@
-import os
 from typing import Generator, Any
 
 from dependency_injector import containers, providers, resources

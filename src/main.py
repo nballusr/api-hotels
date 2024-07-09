@@ -33,4 +33,3 @@ app.include_router(main_router)
 
 register_middlewares(app)
 register_exception_handlers(app)
-

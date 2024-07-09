@@ -11,4 +11,3 @@ def load_by_environment(env: str, test_envs=None, prefix: str = "."):
         load_dotenv(f"{prefix}/.env.local")
 
     load_dotenv(f"{prefix}/.env")
-

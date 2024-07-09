@@ -12,9 +12,9 @@ from src.shared.bus.infrastructure.query_bus import QueryBus
 
 class PyBusesQueryBus(QueryBus):
     def __init__(
-        self,
-        container: containers.Container,
-        middlewares: typing.Optional[typing.List[typing.Callable]] = None,
+            self,
+            container: containers.Container,
+            middlewares: typing.Optional[typing.List[typing.Callable]] = None,
     ):
         if not middlewares:
             middlewares = []
