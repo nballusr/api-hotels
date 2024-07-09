@@ -28,7 +28,7 @@ main_router.include_router(get_hotels_controller.router)
 main_router.include_router(update_hotel_controller.router)
 main_router.include_router(remove_hotel_controller.router)
 
-app = FastAPI(title="API-Hotels")
+app = FastAPI(title="API-Hotels", docs_url="/api/docs", redoc_url="/api/redoc")
 app.include_router(main_router)
 
 register_middlewares(app)

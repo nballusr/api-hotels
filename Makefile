@@ -23,7 +23,7 @@ start:
 	@echo ""
 	@echo -e "$(COLOR_GREEN) Done! $(COLOR_NC)"
 	@echo -e "  - API available at http://localhost:8080"
-	@echo -e "  - API doc available at http://localhost:8080/docs"
+	@echo -e "  - API doc available at http://localhost:8080/api/docs"
 	@echo ""
 	@echo "####################################################################"
 

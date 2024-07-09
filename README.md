@@ -49,7 +49,7 @@ The API is available at http://localhost:8080
 
 #### API Doc
 
-The API documentation is available at http://localhost:8080/docs
+The API documentation is available at http://localhost:8080/api/docs
 
 ### Migrations
 
