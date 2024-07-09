@@ -7,7 +7,7 @@ from src.shared.application.command_handler import CommandHandler
 from src.shared.bus.infrastructure.command_bus import CommandBus
 
 
-class PybusesCommandBus(CommandBus):
+class PyBusesCommandBus(CommandBus):
     def __init__(self, bus: NativeCommandBus, container: containers.Container):
         self.bus = bus
         self.container = container

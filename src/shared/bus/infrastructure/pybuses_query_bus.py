@@ -24,7 +24,7 @@ class PyBusesQueryBus(QueryBus):
         self._middlewares = middlewares
         self._handlers: typing.Dict[Subscribable, Listener] = {}
 
-    def handle(self, query) -> None:
+    def handle(self, query) -> typing.Any:
         if not self.initialized:
             self._initialize()
 
@@ -41,10 +41,10 @@ class PyBusesQueryBus(QueryBus):
         return res
 
     def subscribe(self, listener: Listener) -> None:
-        command = get_subscribed(listener)
-        if command in self._handlers:
-            raise ValueError("{} already has a handler ({})!".format(command, self._handlers[command]))
-        self._handlers[command] = listener
+        query = get_subscribed(listener)
+        if query in self._handlers:
+            raise ValueError("{} already has a handler ({})!".format(query, self._handlers[query]))
+        self._handlers[query] = listener
 
     def _register(self, handler) -> None:
         self.subscribe(handler.__call__)

@@ -1,6 +1,6 @@
 import pybuses
 from dependency_injector import containers, providers
-from src.shared.bus.infrastructure.pybuses_command_bus import PybusesCommandBus
+from src.shared.bus.infrastructure.pybuses_command_bus import PyBusesCommandBus
 from src.shared.bus.infrastructure.pybuses_query_bus import PyBusesQueryBus
 from src.shared.bus.infrastructure.query_bus import QueryBus
 
@@ -15,7 +15,7 @@ class BusesContainer(containers.DeclarativeContainer):
     CommandBus = providers.AbstractSingleton(CommandBus)
     CommandBus.override(
         providers.Singleton(
-            PybusesCommandBus,
+            PyBusesCommandBus,
             bus=providers.Singleton(
                 pybuses.CommandBus,
                 middlewares=middlewares,
