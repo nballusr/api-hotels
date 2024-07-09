@@ -115,6 +115,12 @@ business logic in a clear and concise manner.
 The project is organized following the principles of Hexagonal Architecture. This architectural style helps in creating
 a system that is easier to maintain, test, and adapt to future requirements.
 
+### Note
+
+This API does not currently include authentication and authorization mechanisms, as they were not required for the
+initial scope of the project. However, these features can be easily integrated in future iterations to enhance the
+security and access control of the application.
+
 ### Summary
 
 Combining dependency injection, CQRS with middlewares, and Hexagonal Architecture results in a highly decoupled,
