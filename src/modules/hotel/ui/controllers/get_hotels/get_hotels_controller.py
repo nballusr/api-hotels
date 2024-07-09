@@ -9,7 +9,16 @@ from src.shared.bus.infrastructure.query_bus import QueryBus
 router = APIRouter(tags=["hotel"])
 
 
-@router.get("/hotels", response_model=GetHotelsResponseModel)
+@router.get(
+    "/hotels",
+    summary="Get hotel information of all hotels",
+    description="Get hotel information of all hotels.",
+    response_model=GetHotelsResponseModel,
+    responses={
+        200: {"description": "Successful Response", "model": GetHotelsResponseModel},
+        500: {"description": "Internal Server Error"},
+    },
+)
 @inject
 def get_hotels(
     query_bus: QueryBus = Depends(Provide["QueryBus"]),

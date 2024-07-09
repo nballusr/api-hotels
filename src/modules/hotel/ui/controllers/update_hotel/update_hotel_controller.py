@@ -6,6 +6,8 @@ from pydantic import BaseModel
 
 from src.modules.hotel.application.get_hotel.get_hotel_query import GetHotelQuery
 from src.modules.hotel.application.update_hotel.update_hotel_command import UpdateHotelCommand
+from src.modules.hotel.ui.controllers.response_models.custom_exception_response_model import \
+    CustomExceptionResponseModel
 from src.modules.hotel.ui.controllers.response_models.hotel_response_model import HotelResponseModel
 from src.shared.bus.infrastructure.command_bus import CommandBus
 from src.shared.bus.infrastructure.query_bus import QueryBus
@@ -21,7 +23,18 @@ class UpdateHotelRequestModel(BaseModel):
     has_swimming_pool: bool
 
 
-@router.put("/hotels/{hotel_uuid}", response_model=HotelResponseModel)
+@router.put(
+    "/hotels/{hotel_uuid}",
+    summary="Update hotel information by uuid",
+    description="Update hotel information by uuid.",
+    response_model=HotelResponseModel,
+    responses={
+        200: {"description": "Successful Response", "model": HotelResponseModel},
+        400: {"description": "Bad Request", "model": CustomExceptionResponseModel},
+        404: {"description": "Not Found", "model": CustomExceptionResponseModel},
+        500: {"description": "Internal Server Error"},
+    },
+)
 @inject
 def put_hotel(
     hotel_uuid: UUID,
