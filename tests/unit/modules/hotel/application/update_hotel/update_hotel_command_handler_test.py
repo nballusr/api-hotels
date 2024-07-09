@@ -28,7 +28,6 @@ class UpdateHotelCommandHandlerTest(TestCase):
 
         self.assertEqual(f"Hotel with uuid {uuid} not found", e.exception.message)
 
-
     def test_another_hotel_with_same_name_raises_exception(self) -> None:
         self.__in_memory_hotel_repository.save(
             StubHotelBuilder().with_uuid(hotel_uuid := uuid4()).build()

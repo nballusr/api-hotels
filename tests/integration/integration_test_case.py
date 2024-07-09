@@ -15,10 +15,10 @@ class IntegrationTestCase(TestCase):
         os.chdir(os.getenv("WORKDIR"))
         self.__load_test_environment()
         self.__container = ContainerBuilder.build_container()
-    
+
     def __load_test_environment(self) -> None:
         load_by_environment("test")
-    
+
     def container(self) -> ApplicationContainer:
         return self.__container
 
@@ -31,8 +31,7 @@ class IntegrationTestCase(TestCase):
         tables_string = ",".join(tables)
         session.execute(text(f"TRUNCATE TABLE {tables_string}"))
         session.commit()
-    
+
     def tearDown(self) -> None:
         self.__container.database_package.db_session.shutdown()
         super().tearDown()
-        

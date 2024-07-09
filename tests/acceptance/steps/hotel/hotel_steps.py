@@ -58,6 +58,7 @@ def exists_a_hotel_with_name(context: Context, uuid: str):
     if "has_swimming_pool" in values.keys():
         assert hotel.has_swimming_pool == values["has_swimming_pool"]
 
+
 @then("a hotel with uuid {uuid} does not exist")
 def exists_a_hotel_with_name(context: Context, uuid: str):
     container: ApplicationContainer = context.container
@@ -65,4 +66,3 @@ def exists_a_hotel_with_name(context: Context, uuid: str):
     hotel = db.query(Hotel).filter(Hotel.uuid == uuid).first()
 
     assert hotel is None
-
