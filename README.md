@@ -96,3 +96,26 @@ To just execute acceptance tests, run:
 ```
 make acceptance
 ```
+
+## Project Architecture and Design Patterns
+
+### Dependency Injection
+
+This project leverages the dependency-injector package to manage dependencies in a clean and modular way. Dependency
+Injection (DI) allows for greater flexibility and testability by decoupling the creation and management of dependencies
+from the business logic.
+
+### Command Query Responsibility Segregation (CQRS)
+
+The project employs the Command Query Responsibility Segregation (CQRS) pattern along with middlewares to handle
+business logic in a clear and concise manner.
+
+### Hexagonal Architecture
+
+The project is organized following the principles of Hexagonal Architecture. This architectural style helps in creating
+a system that is easier to maintain, test, and adapt to future requirements.
+
+### Summary
+
+Combining dependency injection, CQRS with middlewares, and Hexagonal Architecture results in a highly decoupled,
+maintainable, and scalable codebase. This architectural approach ensures that the core business logic remains clean and testable while facilitating easy integration with various external systems and services.
